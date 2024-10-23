@@ -104,10 +104,18 @@ BOARD_KERNEL_IMAGE_NAME := Image.gz
 endif
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_SEPARATED_DTBO := true
+TARGET_KERNEL_CLANG_VERSION := boolx-clang
+TARGET_KERNEL_CLANG_PATH := $(shell pwd)/prebuilts/clang/host/linux-x86/$(TARGET_KERNEL_CLANG_VERSION)
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(TARGET_KERNEL_CLANG_PATH)/bin/aarch64-linux-gnu-
+TARGET_KERNEL_CROSS_COMPILE_ARM32_PREFIX := $(TARGET_KERNEL_CLANG_PATH)/bin/arm-linux-gnueabi-
+TARGET_KERNEL_ADDITIONAL_FLAGS := LLVM=1 LLVM_IAS=1
+KERNEL_SUPPORTS_LLVM_TOOLS := true
+KERNEL_LD := LD=ld.lld
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-TARGET_KERNEL_SOURCE := kernel/xiaomi/sm8150
+TARGET_KERNEL_SOURCE := kernel/xiaomi/boolx
 TARGET_KERNEL_CONFIG := \
-    vendor/sm8150-perf_defconfig \
+    raphael_defconfig \
     vendor/debugfs.config \
     vendor/xiaomi/sm8150-common.config
 
